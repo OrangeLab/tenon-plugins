@@ -1,0 +1,10 @@
+# log
+*.log
+
+# Editor
+.DS_Store
+
+# Common
+node_modules
+coverage
+explorations

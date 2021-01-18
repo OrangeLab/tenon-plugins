@@ -1,0 +1,21 @@
+{
+  "name": "@hummer/vue-preset-base",
+  "version": "0.1.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "npx ../../node_modules/.bin/rollup -c",
+    "dev": "npx ../../node_modules/.bin/rollup -wc"
+  },
+  "dependencies": {
+    "@hummer/vue-plugin-list": "^0.1.0",
+    "@hummer/vue-plugin-viewpager": "^0.1.0",
+    "@hummer/vue-plugin-popup": "^0.1.0"
+  },
+  "peerDependencies": {
+    "@hummer/tenon-vue": "^1.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
