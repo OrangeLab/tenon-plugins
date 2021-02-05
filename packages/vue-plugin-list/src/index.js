@@ -1,5 +1,10 @@
 import {Base, renderCustomSlot, View, createVNode} from '@hummer/tenon-vue'
 const {List} = __GLOBAL__
+const RenderType = {
+  REFRESH: 'refresh',
+  LODAMORE: 'loadmore',
+  ITEM: 'item'
+}
 class ExList extends Base{
   constructor(){
     super()
@@ -9,6 +14,8 @@ class ExList extends Base{
     this.initElement()
     this._cacheView = []
     this.id = 0
+    this.itemRenderMap = {}
+    this.defaultItemRender = null
   }
   initElement(){
     this.list = this.element = new List()
@@ -60,20 +67,44 @@ class ExList extends Base{
         this.data = value
         this.render && this.refresh()
         break;
+      case 'register':
+        // 处理 List Type 方法
+        this.handleListRegister(value)
+        break;
       default:
         break;
     }
   }
   renderElement(){
-    let {refresh, loadmore, item} = this.render
-    refresh && this.renderRefreshView()
-    loadmore && this.renderLoadMoreView()
-    item && this.renderListView(item)
+    Object.keys(this.render).forEach(key => {
+      let render = this.render[key]
+      switch(key){
+        case RenderType.REFRESH:
+          this.renderRefreshView();
+          break;
+        case RenderType.LODAMORE:
+          this.renderLoadMoreView();
+          break;
+        case RenderType.ITEM:
+          this.defaultItemRender = render
+          break;
+        default:
+          // Type 类型渲染，进行收集
+          this.itemRenderMap[key] = render
+          break;
+      }
+    })
+    this.renderListView()
   }
 
-  renderListView(render){
+  handleListRegister(func){
+    this.list.onRegister = func
+  }
+
+  renderListView(){
     this.list.onCreate = (type) => {
       let itemView = new View()
+      let itemRender = this.getItemRender(type)
       let component = createVNode({
         data(){
           return {
@@ -82,7 +113,7 @@ class ExList extends Base{
             index: null
           }
         },
-        render: render
+        render: itemRender
       })
       renderCustomSlot(component, itemView)
       let cell = itemView.element
@@ -117,6 +148,18 @@ class ExList extends Base{
     this.list.loadMoreView = loadMoreView.element
   }
 
+  getItemRender(type){
+    let renderKey = this.getItemRenderKey(type)
+    if(this.itemRenderMap[renderKey]){
+      return this.itemRenderMap[renderKey]
+    }else {
+      return this.defaultItemRender
+    }
+  }
+
+  getItemRenderKey(type){
+    return `item_${type}`
+  }
 
   addEventListener(event, func){
     switch(event){

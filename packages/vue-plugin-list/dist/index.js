@@ -103,6 +103,11 @@ function _createSuper(Derived) {
 
 var _GLOBAL__ = __GLOBAL__,
     List = _GLOBAL__.List;
+var RenderType = {
+  REFRESH: 'refresh',
+  LODAMORE: 'loadmore',
+  ITEM: 'item'
+};
 
 var ExList = /*#__PURE__*/function (_Base) {
   _inherits(ExList, _Base);
@@ -123,6 +128,8 @@ var ExList = /*#__PURE__*/function (_Base) {
 
     _this._cacheView = [];
     _this.id = 0;
+    _this.itemRenderMap = {};
+    _this.defaultItemRender = null;
     return _this;
   }
 
@@ -190,26 +197,59 @@ var ExList = /*#__PURE__*/function (_Base) {
           this.data = value;
           this.render && this.refresh();
           break;
+
+        case 'register':
+          // 处理 List Type 方法
+          this.handleListRegister(value);
+          break;
       }
     }
   }, {
     key: "renderElement",
     value: function renderElement() {
-      var _this$render = this.render,
-          refresh = _this$render.refresh,
-          loadmore = _this$render.loadmore,
-          item = _this$render.item;
-      refresh && this.renderRefreshView();
-      loadmore && this.renderLoadMoreView();
-      item && this.renderListView(item);
+      var _this2 = this;
+
+      Object.keys(this.render).forEach(function (key) {
+        var render = _this2.render[key];
+
+        switch (key) {
+          case RenderType.REFRESH:
+            _this2.renderRefreshView();
+
+            break;
+
+          case RenderType.LODAMORE:
+            _this2.renderLoadMoreView();
+
+            break;
+
+          case RenderType.ITEM:
+            _this2.defaultItemRender = render;
+            break;
+
+          default:
+            // Type 类型渲染，进行收集
+            _this2.itemRenderMap[key] = render;
+            break;
+        }
+      });
+      this.renderListView();
+    }
+  }, {
+    key: "handleListRegister",
+    value: function handleListRegister(func) {
+      this.list.onRegister = func;
     }
   }, {
     key: "renderListView",
-    value: function renderListView(render) {
-      var _this2 = this;
+    value: function renderListView() {
+      var _this3 = this;
 
       this.list.onCreate = function (type) {
         var itemView = new View();
+
+        var itemRender = _this3.getItemRender(type);
+
         var component = createVNode({
           data: function data() {
             return {
@@ -218,21 +258,21 @@ var ExList = /*#__PURE__*/function (_Base) {
               index: null
             };
           },
-          render: render
+          render: itemRender
         });
         renderCustomSlot(component, itemView);
         var cell = itemView.element;
-        cell._id = _this2.id++;
+        cell._id = _this3.id++;
 
-        _this2._cacheView.push(component.component);
+        _this3._cacheView.push(component.component);
 
         return cell;
       };
 
       this.list.onUpdate = function (position, cell) {
-        var data = _this2.data[position];
+        var data = _this3.data[position];
         var id = cell._id;
-        var itemInstance = _this2._cacheView[id];
+        var itemInstance = _this3._cacheView[id];
         itemInstance.data.data = data;
         itemInstance.data.item = data;
         itemInstance.data.index = position;
@@ -259,21 +299,37 @@ var ExList = /*#__PURE__*/function (_Base) {
       this.list.loadMoreView = loadMoreView.element;
     }
   }, {
+    key: "getItemRender",
+    value: function getItemRender(type) {
+      var renderKey = this.getItemRenderKey(type);
+
+      if (this.itemRenderMap[renderKey]) {
+        return this.itemRenderMap[renderKey];
+      } else {
+        return this.defaultItemRender;
+      }
+    }
+  }, {
+    key: "getItemRenderKey",
+    value: function getItemRenderKey(type) {
+      return "item_".concat(type);
+    }
+  }, {
     key: "addEventListener",
     value: function addEventListener(event, func) {
-      var _this3 = this;
+      var _this4 = this;
 
       switch (event) {
         case 'refresh':
           this.element.onRefresh = function (state) {
-            func.call(_this3, state, _this3);
+            func.call(_this4, state, _this4);
           };
 
           break;
 
         case 'loadmore':
           this.element.onLoadMore = function (state) {
-            func.call(_this3, state, _this3);
+            func.call(_this4, state, _this4);
           };
 
           break;
