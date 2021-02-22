@@ -1,6 +1,6 @@
 {
   "name": "@hummer/vue-preset-base",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "dev": "npx ../../node_modules/.bin/rollup -wc"
   },
   "dependencies": {
-    "@hummer/vue-plugin-list": "^0.2.1-alpha.0",
+    "@hummer/vue-plugin-list": "^0.2.2",
     "@hummer/vue-plugin-popup": "^0.2.0",
     "@hummer/vue-plugin-viewpager": "^0.2.1"
   },
