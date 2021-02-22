@@ -1,6 +1,6 @@
 {
   "name": "@hummer/vue-preset-base",
-  "version": "0.2.1-alpha.0",
+  "version": "0.2.1",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   "dependencies": {
     "@hummer/vue-plugin-list": "^0.2.1-alpha.0",
     "@hummer/vue-plugin-popup": "^0.2.0",
-    "@hummer/vue-plugin-viewpager": "^0.2.0"
+    "@hummer/vue-plugin-viewpager": "^0.2.1"
   },
   "peerDependencies": {
     "@hummer/tenon-vue": "^1.0.0"
