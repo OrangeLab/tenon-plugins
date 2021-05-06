@@ -1,0 +1,13 @@
+{
+  "name": "@hummer/vue-plugin-error-handler",
+  "version": "0.1.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "npx ../../node_modules/.bin/rollup -c",
+    "dev": "npx ../../node_modules/.bin/rollup -wc"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
