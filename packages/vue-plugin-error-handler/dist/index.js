@@ -1,14 +1,36 @@
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
 function postException(err) {
   // 上报给 Hummer， Hummer 侧统一处理统一接口
+  var hummerError = new HummerError(err);
+
   if (Hummer.postException) {
-    Hummer.postException(err);
+    Hummer.postException(hummerError);
   } else {
-    logError(err);
+    logError(hummerError);
   }
 }
 function logError(err) {
   console.error("JsError: ".concat(err.message, "\n").concat(err.stack));
 }
+var HummerError = function HummerError(err) {
+  _classCallCheck(this, HummerError);
+
+  var line = err.line,
+      column = err.column,
+      message = err.message,
+      stack = err.stack,
+      sourceURL = err.sourceURL;
+  this.line = line;
+  this.column = column;
+  this.message = message;
+  this.stack = stack;
+  this.sourceURL = sourceURL;
+};
 
 function install(app) {
   app.config.errorHandler = function (err, vm, info) {
@@ -21,4 +43,4 @@ var index = {
 };
 
 export default index;
-export { logError, postException };
+export { HummerError, logError, postException };
