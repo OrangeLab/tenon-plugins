@@ -14,7 +14,8 @@ export function logError(err){
 
 export class HummerError{
   constructor(err){
-    let {line, column, message, stack, sourceURL} = err
+    let {line, column, message, stack, sourceURL, name} = err
+    this.name = name
     this.line = line
     this.column = column
     this.message = message
