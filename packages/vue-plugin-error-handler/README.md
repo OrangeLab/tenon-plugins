@@ -1,6 +1,5 @@
 # Tenon Vue Plugin Error Handler
-## Error Handler
-Error Handler 用于全局捕获生产环境的 Error 信息，调用原生 API，统一上报给原生。
+`Tenon Vue Plugin Error Handler` 用于全局捕获生产环境的 Error 信息，调用原生 API，统一上报给原生。
 ### 简介
 Error Handler 用于捕获生产环境中运行时 Error 信息，调用原生 API，统一上报给原生。
 > 运行时错误，是指在 Vue 运行过程中发生的异常信息，主要包括生命周期处理、内部方法调用
@@ -9,6 +8,6 @@ Error Handler 用于捕获生产环境中运行时 Error 信息，调用原生 A
 
 ### 使用方式
 ```javascript
-import ErrorHandler from '@hummer/vue-plugin-error';
+import ErrorHandler from '@hummer/vue-plugin-error-handler';
 Tenon.use(ErrorHandler);
 ```
