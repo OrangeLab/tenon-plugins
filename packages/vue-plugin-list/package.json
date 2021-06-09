@@ -1,6 +1,6 @@
 {
   "name": "@hummer/vue-plugin-list",
-  "version": "0.3.0",
+  "version": "0.3.4",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
