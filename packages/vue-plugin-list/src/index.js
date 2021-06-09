@@ -12,8 +12,6 @@ class ExList extends Base{
     this.render = null
     this.data = []
     this.initElement()
-    this._cacheView = []
-    this.id = 0
     this.itemRenderMap = {}
     this.defaultItemRender = null
   }
@@ -104,30 +102,34 @@ class ExList extends Base{
   renderListView(){
     this.list.onCreate = (type) => {
       let itemView = new View()
-      let itemRender = this.getItemRender(type)
-      let component = createVNode({
-        data(){
-          return {
-            data: {},
-            item: {},
-            index: null
-          }
-        },
-        render: itemRender
-      })
-      renderCustomSlot(component, itemView)
       let cell = itemView.element
-      cell._id = this.id++
-      this._cacheView.push(component.component)
+      cell._view = itemView
+      cell.type = type
       return cell
     }
     this.list.onUpdate = (position, cell) => {
       let data = this.data[position]
-      let id = cell._id
-      let itemInstance = this._cacheView[id]
-      itemInstance.data.data = data
-      itemInstance.data.item = data
-      itemInstance.data.index = position
+      let itemInstance = cell.instance
+      if(itemInstance){
+        itemInstance.data.data = data
+        itemInstance.data.item = data
+        itemInstance.data.index = position
+      }else{
+        let {type, _view} = cell
+        let itemRender = this.getItemRender(type)
+        let component = createVNode({
+          data(){
+            return {
+              data: data,
+              item: data,
+              index: position
+            }
+          },
+          render: itemRender
+        })
+        renderCustomSlot(component, _view)
+        cell.instance = component.component
+      }
     }
   }
   renderRefreshView(){

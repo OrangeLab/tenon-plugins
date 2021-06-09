@@ -126,8 +126,6 @@ var ExList = /*#__PURE__*/function (_Base) {
 
     _this.initElement();
 
-    _this._cacheView = [];
-    _this.id = 0;
     _this.itemRenderMap = {};
     _this.defaultItemRender = null;
     return _this;
@@ -247,35 +245,39 @@ var ExList = /*#__PURE__*/function (_Base) {
 
       this.list.onCreate = function (type) {
         var itemView = new View();
-
-        var itemRender = _this3.getItemRender(type);
-
-        var component = createVNode({
-          data: function data() {
-            return {
-              data: {},
-              item: {},
-              index: null
-            };
-          },
-          render: itemRender
-        });
-        renderCustomSlot(component, itemView);
         var cell = itemView.element;
-        cell._id = _this3.id++;
-
-        _this3._cacheView.push(component.component);
-
+        cell._view = itemView;
+        cell.type = type;
         return cell;
       };
 
       this.list.onUpdate = function (position, cell) {
-        var data = _this3.data[position];
-        var id = cell._id;
-        var itemInstance = _this3._cacheView[id];
-        itemInstance.data.data = data;
-        itemInstance.data.item = data;
-        itemInstance.data.index = position;
+        var _data = _this3.data[position];
+        var itemInstance = cell.instance;
+
+        if (itemInstance) {
+          itemInstance.data.data = _data;
+          itemInstance.data.item = _data;
+          itemInstance.data.index = position;
+        } else {
+          var type = cell.type,
+              _view = cell._view;
+
+          var itemRender = _this3.getItemRender(type);
+
+          var component = createVNode({
+            data: function data() {
+              return {
+                data: _data,
+                item: _data,
+                index: position
+              };
+            },
+            render: itemRender
+          });
+          renderCustomSlot(component, _view);
+          cell.instance = component.component;
+        }
       };
     }
   }, {
