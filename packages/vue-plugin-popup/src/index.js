@@ -21,6 +21,7 @@ class ExPopup extends Base{
 
     this.dialog = new Dialog()
     this.dialog.cancelable = false
+    this.dialog.lowLayer = true
     this.innerView = new TenonView()
     this.innerView.element.style = {
       height: '100%',

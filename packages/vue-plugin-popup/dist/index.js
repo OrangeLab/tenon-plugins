@@ -136,6 +136,7 @@ var ExPopup = /*#__PURE__*/function (_Base) {
       this.element = new View();
       this.dialog = new Dialog();
       this.dialog.cancelable = false;
+      this.dialog.lowLayer = true;
       this.innerView = new View$1();
       this.innerView.element.style = {
         height: '100%',
