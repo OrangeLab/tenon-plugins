@@ -179,6 +179,15 @@ class ExList extends Base{
         break;
     }
   }
+
+  setMaxRecycledByType(type, size){
+    this.element.setMaxRecycledByType(type, size)
+  }
+
+  setMaxRecycled(size){
+    this.element.setMaxRecycled(size)
+  }
+
 }
 
 export default {
