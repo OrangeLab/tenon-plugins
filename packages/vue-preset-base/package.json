@@ -1,6 +1,6 @@
 {
   "name": "@hummer/vue-preset-base",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -8,9 +8,9 @@
     "dev": "npx ../../node_modules/.bin/rollup -wc"
   },
   "dependencies": {
-    "@hummer/vue-plugin-list": "^0.5.0",
-    "@hummer/vue-plugin-popup": "^0.5.0",
-    "@hummer/vue-plugin-viewpager": "^0.5.0"
+    "@hummer/vue-plugin-list": "^0.6.0",
+    "@hummer/vue-plugin-popup": "^0.6.0",
+    "@hummer/vue-plugin-viewpager": "^0.6.0"
   },
   "peerDependencies": {
     "@hummer/tenon-vue": "^1.0.0"
