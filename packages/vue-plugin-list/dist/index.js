@@ -329,6 +329,7 @@ var ExList = /*#__PURE__*/function (_Base) {
 
           break;
 
+        case 'loadMore':
         case 'loadmore':
           this.element.onLoadMore = function (state) {
             func.call(_this4, state, _this4);

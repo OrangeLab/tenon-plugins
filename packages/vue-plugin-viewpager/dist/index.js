@@ -227,24 +227,28 @@ var ViewPager = /*#__PURE__*/function (_Base) {
 
       switch (event) {
         case 'pagechange':
+        case 'pageChange':
           this.element.onPageChange(function (current, total) {
             func.call(_this3, current, total);
           });
           break;
 
         case 'pagescroll':
+        case 'pageScroll':
           this.element.onPageScroll(function (position, percent) {
             func.call(_this3, position, percent);
           });
           break;
 
         case 'pagescrollstatechange':
+        case 'pageScrollStateChange':
           this.element.onPageScrollStateChange(function (state) {
             func.call(_this3, state);
           });
           break;
 
         case 'itemclick':
+        case 'itemClick':
           this.element.onItemClick(function (position) {
             func.call(_this3, position);
           });
