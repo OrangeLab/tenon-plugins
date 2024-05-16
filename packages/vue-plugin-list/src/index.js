@@ -170,6 +170,7 @@ class ExList extends Base{
           func.call(this, state, this)
         }
         break;
+      case 'loadMore':
       case 'loadmore':
         this.element.onLoadMore = (state) => {
           func.call(this, state, this)

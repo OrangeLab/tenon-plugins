@@ -81,21 +81,25 @@ class ViewPager extends Base{
   addEventListener(event, func){
     switch(event){
       case 'pagechange':
+      case 'pageChange':
         this.element.onPageChange((current,total) => {
           func.call(this, current, total)
         })
         break;
       case 'pagescroll':
+      case 'pageScroll':
         this.element.onPageScroll((position,percent) => {
           func.call(this, position, percent)
         })
         break;
       case 'pagescrollstatechange':
+      case 'pageScrollStateChange':
         this.element.onPageScrollStateChange((state) => {
           func.call(this, state)
         })
         break;
       case 'itemclick':
+      case 'itemClick':
         this.element.onItemClick((position) => {
           func.call(this, position)
         })
