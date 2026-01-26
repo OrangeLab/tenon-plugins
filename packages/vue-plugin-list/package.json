@@ -1,6 +1,6 @@
 {
   "name": "@hummer/vue-plugin-list",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -9,5 +9,6 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "gitHead": "de2f72fdfc175eaa74f257898e8d711292fb35b4"
 }
