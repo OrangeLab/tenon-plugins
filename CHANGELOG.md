@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/hummer-home/tenon-plugins/compare/v0.6.0...v0.7.0) (2026-01-26)
+
+
+### Features
+
+* 优化data判断 避免重复渲染 ([b1160dd](https://github.com/hummer-home/tenon-plugins/commit/b1160dd28c1444294591a4742dc4d0286d2b405d))
+
+
+
+
+
 # [0.6.0](https://github.com/hummer-home/tenon-plugins/compare/v0.5.0...v0.6.0) (2024-05-16)
 
 
