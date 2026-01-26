@@ -159,6 +159,10 @@ var ViewPager = /*#__PURE__*/function (_Base) {
           break;
 
         case 'data':
+          if (JSON.stringify(this.data) === JSON.stringify(value)) {
+            break;
+          }
+
           this.data = value;
 
           if (this.render) {

@@ -24,6 +24,9 @@ class ViewPager extends Base{
         }
         break;
       case 'data':
+        if (JSON.stringify(this.data) === JSON.stringify(value)) {
+          break;
+        }
         this.data = value
         if(this.render){
           this.element.data = new Array(this.data.length)
